@@ -97,3 +97,4 @@ echo "Creating Infywiki Service on ECS Cluster and attaching ELB to web containe
 sleep 360;
 echo "Please find your Load Balancer details given below and Open webapp with https://LOAD-BALANCER-NAME:443"
 cat ELBdetails
+ls `pwd` | grep -v main_infra.sh | xargs rm -rf;

@@ -15,8 +15,11 @@ ecs-cli down --force;
 sleep 300;
 
 #Update or scale service
-ecs-cli compose --file docker-compose.yml --project-name InfyWiki --verbose create > Taskdetails
-TD=$(grep -r InfyWiki: Taskdetails | cut -f5 -d"=" | tr -d "\"" | tr -d "\,")
-aws ecs update-service --service InfyWiki --cluster "InfyWiki" --desired-count 0
-aws ecs delete-service --service InfyWiki --cluster "InfyWiki"
-aws ecs create-service --service-name "InfyWiki" --cluster "InfyWiki" --task-definition $TD --load-balancers "loadBalancerName=InfyWiki,containerName=mediawiki,containerPort=443" --desired-count 2 --deployment-configuration "maximumPercent=200,minimumHealthyPercent=50"
+#aws s3 cp s3://infywiki/Hackathon/docker-compose.yml .
+#ecs-cli compose --file docker-compose.yml --project-name InfyWiki --verbose create > Taskdetails
+#TD=$(grep -r InfyWiki: Taskdetails | cut -f5 -d"=" | tr -d "\"" | tr -d "\,")
+#aws ecs update-service --service InfyWiki --cluster "InfyWiki" --desired-count 0
+#aws ecs delete-service --service InfyWiki --cluster "InfyWiki"
+#aws ecs create-service --service-name "InfyWiki" --cluster "InfyWiki" --task-definition $TD --load-balancers "loadBalancerName=InfyWiki,containerName=mediawiki,containerPort=443" --desired-count 2 --deployment-configuration "maximumPercent=200,minimumHealthyPercent=50"
+
+#aws elb register-instances-with-load-balancer --load-balancer-name InfyWiki --instances 

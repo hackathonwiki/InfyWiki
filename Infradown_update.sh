@@ -13,7 +13,7 @@ while read task; do aws ecs deregister-task-definition --task-definition $task >
 #delete service steps:
 aws ecs update-service --service InfyWiki --cluster "InfyWiki" --task-definition InfyWiki:6 --desired-count 0
 aws ecs delete-service --service InfyWiki --cluster "InfyWiki"
-
+aws elb delete-load-balancer --load-balancer-name InfyWiki
 ecs-cli compose --file docker-compose.yml --project-name InfyWiki --verbose create
 
 aws ecs create-service --service-name "InfyWiki" --cluster "InfyWiki" --task-definition InfyWiki:11 --load-balancers "loadBalancerName=InfyWiki,containerName=mediawiki,containerPort=443" --desired-count 2 --deployment-configuration "maximumPercent=200,minimumHealthyPercent=50"

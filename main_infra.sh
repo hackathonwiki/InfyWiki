@@ -9,7 +9,7 @@
 #curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
 #chmod +x /usr/local/bin/ecs-cli
 #alias ecs-cli="/usr/local/bin/ecs-cli"
-
+mkdir Hackathon;cd Hackathon;
 #**Configure AWS**
 aws configure set default.region ap-south-1
 read -s -p "Enter Your access-key: "  ak;printf '\n';
@@ -96,5 +96,8 @@ aws ec2 authorize-security-group-ingress --group-id $SG --protocol tcp --port 44
 echo "Creating Infywiki Service on ECS Cluster and attaching ELB to web containers"
 sleep 360;
 echo "Please find your Load Balancer details given below and Open webapp with https://LOAD-BALANCER-NAME:443"
-cat ELBdetails
-ls `pwd` | grep -v main_infra.sh | xargs rm -rf;
+$ELB=$(cat ELBdetails  | grep DNS | cut -f2 -d":" | tr -d "\"" | tr -d "\ ")
+echo "Please find your Load Balancer details given below and Open webapp this URL: https://$ELB:443"
+rm -rf bitnami_mediawiki.sql clusterdetails docker-compose.yml ecs-params.yml ELBdetails Taskdetails;
+
+printf "DB endpoint= $DB\nsecurity-group of ECS Instances= $SG\nELB Details= $ELB\nSubnet1= $SN1\nSubnet2= $SN2\nCurrent task-definition= $TD\n" > details

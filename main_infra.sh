@@ -77,6 +77,7 @@ SN2=$(grep Subnet clusterdetails | cut -f2 -d":" | tr -d ' ' | awk 'NR==2{print 
 
 
 #Create a task definition using compose file
+aws s3 cp s3://infywiki/Hackathon/docker-compose.yml .
 ecs-cli compose --file docker-compose.yml --project-name InfyWiki --verbose create > Taskdetails
 TD=$(grep -r InfyWiki: Taskdetails | cut -f5 -d"=" | tr -d "\"" | tr -d "\,")
 echo "creating task definition"
@@ -93,10 +94,10 @@ aws ecs create-service --service-name "InfyWiki" --cluster "InfyWiki" --task-def
 aws ec2 authorize-security-group-ingress --group-id $SG --protocol tcp --port 443 --cidr 0.0.0.0/0
 
 echo "Creating Infywiki Service on ECS Cluster and attaching ELB to web containers"
-sleep 360;
+sleep 180;
 echo "Please find your Load Balancer details given below and Open webapp with https://LOAD-BALANCER-NAME:443"
 $ELB=$(cat ELBdetails  | grep DNS | cut -f2 -d":" | tr -d "\"" | tr -d "\ ")
 echo "Please find your Load Balancer details given below and Open webapp this URL: https://$ELB:443"
 rm -rf bitnami_mediawiki.sql clusterdetails docker-compose.yml ecs-params.yml ELBdetails Taskdetails;
 
-printf "DB endpoint= $DB\nsecurity-group of ECS Instances= $SG\nELB Details= $ELB\nSubnet1= $SN1\nSubnet2= $SN2\nCurrent task-definition= $TD\n" > details
+printf "DB endpoint= $db\nsecurity-group of ECS Instances= $SG\nELB Details= $ELB\nSubnet1= $SN1\nSubnet2= $SN2\nCurrent task-definition= $TD\n" > details

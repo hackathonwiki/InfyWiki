@@ -97,7 +97,7 @@ aws ec2 authorize-security-group-ingress --group-id $SG --protocol tcp --port 80
 echo "Creating Infywiki Service on ECS Cluster and attaching ELB to web containers"
 sleep 180;
 echo "Please find your Load Balancer details given below and Open webapp with https://LOAD-BALANCER-NAME:443"
-$ELB=$(aws elb describe-load-balancers --load-balancer-name InfyWiki | grep DNS | cut -f2 -d":" | tr -d "\"" | tr -d "\ " | tr -d "\,")
+ELB=$(aws elb describe-load-balancers --load-balancer-name InfyWiki | grep DNS | cut -f2 -d":" | tr -d "\"" | tr -d "\ " | tr -d "\,")
 echo "Please find your Load Balancer details given below and Open webapp this URL: https://$ELB:443"
 #rm -rf bitnami_mediawiki.sql clusterdetails docker-compose.yml ecs-params.yml ELBdetails Taskdetails;
 

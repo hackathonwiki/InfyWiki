@@ -99,7 +99,7 @@ sleep 180;
 echo "Please find your Load Balancer details given below and Open webapp with https://LOAD-BALANCER-NAME:443"
 ELB=$(aws elb describe-load-balancers --load-balancer-name InfyWiki | grep DNS | cut -f2 -d":" | tr -d "\"" | tr -d "\ " | tr -d "\,")
 echo "Please find your Load Balancer details given below and Open webapp this URL: https://$ELB:443"
-#rm -rf bitnami_mediawiki.sql clusterdetails docker-compose.yml ecs-params.yml ELBdetails Taskdetails;
+rm -rf bitnami_mediawiki.sql clusterdetails docker-compose.yml ecs-params.yml ELBdetails Taskdetails;
 
 printf "Security-Group= $SG\nSubnet1= $SN1\nSubnet2= $SN2\nDB endpoint= $db\nCurrent task-definition= $TD\nELB Details= $ELB\n\nPlease access your webapp using following link: https://$ELB:443\n\n" > details
 

@@ -65,7 +65,7 @@ echo "****DB Restoration is complete****"
 #***Note:If multiple ecs creds are present you need to empty creds in ~/.ecs/credentials & ~/.ecs/config***
 #ecs-cli up --force --keypair Hackathon --capability-iam --size 2 --instance-type t2.medium --vpc vpc-38301f50 --security-group sg-094eb8858ea662c53 --subnets subnet-b63f6bde subnet-21318b6d --cluster-config InfyWiki
 #OR
-echo "Lets Create Stack... It may take upto 2 minutes..."
+echo "Lets Create Stack... It may take upto 5 minutes..."
 ecs-cli up --force --keypair Hackathon --capability-iam --size 2 --instance-type t2.medium --azs ap-south-1a,ap-south-1b --cluster-config InfyWiki > clusterdetails
 #wait till resources get generated
 sleep 120s;

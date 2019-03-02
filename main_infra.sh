@@ -92,12 +92,15 @@ sleep 5;
 #Create Service and connect load balancer to it
 aws ecs create-service --service-name "InfyWiki" --cluster "InfyWiki" --task-definition $TD --load-balancers "loadBalancerName=InfyWiki,containerName=mediawiki,containerPort=443" --desired-count 2 --deployment-configuration "maximumPercent=200,minimumHealthyPercent=50"
 aws ec2 authorize-security-group-ingress --group-id $SG --protocol tcp --port 443 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id $SG --protocol tcp --port 8080 --cidr 0.0.0.0/0
 
 echo "Creating Infywiki Service on ECS Cluster and attaching ELB to web containers"
 sleep 180;
 echo "Please find your Load Balancer details given below and Open webapp with https://LOAD-BALANCER-NAME:443"
-$ELB=$(cat ELBdetails  | grep DNS | cut -f2 -d":" | tr -d "\"" | tr -d "\ ")
+$ELB=$(aws elb describe-load-balancers --load-balancer-name InfyWiki | grep DNS | cut -f2 -d":" | tr -d "\"" | tr -d "\ " | tr -d "\,")
 echo "Please find your Load Balancer details given below and Open webapp this URL: https://$ELB:443"
-rm -rf bitnami_mediawiki.sql clusterdetails docker-compose.yml ecs-params.yml ELBdetails Taskdetails;
+#rm -rf bitnami_mediawiki.sql clusterdetails docker-compose.yml ecs-params.yml ELBdetails Taskdetails;
 
-printf "DB endpoint= $db\nsecurity-group of ECS Instances= $SG\nELB Details= $ELB\nSubnet1= $SN1\nSubnet2= $SN2\nCurrent task-definition= $TD\n" > details
+printf "Security-Group= $SG\nSubnet1= $SN1\nSubnet2= $SN2\nDB endpoint= $db\nCurrent task-definition= $TD\nELB Details= $ELB\n\nPlease access your webapp using following link: https://$ELB:443" > details
+
+cat details;

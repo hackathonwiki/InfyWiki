@@ -10,7 +10,6 @@ cat task_list;
 #delete all tasks
 while read task; do aws ecs deregister-task-definition --task-definition $task >/dev/null; done < task_list;
 rm -rf task_list;
-ecs-cli compose --file docker-compose.yml down --cluster-config InfyWiki;
 ecs-cli down --force;
 sleep 300;
 

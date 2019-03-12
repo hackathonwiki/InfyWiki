@@ -1,0 +1,10 @@
+version: 1
+
+task_definition:
+  services:
+    mediawiki:
+      cpu_shares: 500
+      mem_limit: 424288000
+    jenkins:
+      cpu_shares: 500
+      mem_limit: 524288000

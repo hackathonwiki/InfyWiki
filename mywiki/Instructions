@@ -1,0 +1,15 @@
+1] Give following accesses to user:
+
+*AmazonRDSFullAccess
+*AmazonEC2FullAccess
+*IAMFullAccess
+*AmazonS3FullAccess
+*CloudWatchFullAccess
+*AmazonECS_FullAccess
+
+2] Check If following Tools are installed:
+
+*Git
+*mysql
+*aws-cli/ecs-cli (optional)
+
